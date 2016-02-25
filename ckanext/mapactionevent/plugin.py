@@ -18,8 +18,8 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     # IRoutes
 
     def before_map(self, map):
+        map.connect('/', controller='ckanext.mapactionevent.controllers.homecontroller:HomeController', action='index')
         map.connect('/%s/new' % group_type, controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='new')
-        #map.connect('/group/{id}', controller='ckanext.datacatalogs.controller:DataCatalogsGroupController', action='read')
         return map
 
 
