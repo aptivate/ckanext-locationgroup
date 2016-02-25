@@ -15,9 +15,8 @@ def event_create(context, data_dict):
     else:
         event_code = int(existing_events[0]) + 1
 
-
     data_dict.update({
-        'name': str(event_code).zfill(3),  # Zero pad required for validation
+        'name': str(event_code).zfill(5),  # Zero pad required for validation
         'type':'event'
         })
 

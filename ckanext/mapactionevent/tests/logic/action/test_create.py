@@ -21,17 +21,17 @@ class TestCreateEvent(custom_helpers.FunctionalTestBaseClass):
                 context={'user': self.user['name']},
                 users=[{'name': self.user, 'capacity': 'admin'}])
 
-        nose.tools.assert_equal(event['name'], '001')
+        nose.tools.assert_equal(event['name'], '00001')
 
     def test_event_id_created_after_last(self):
         event = helpers.call_action('event_create',
                 context={'user': self.user['name']},
                 users=[{'name': self.user, 'capacity': 'admin'}])
 
-        nose.tools.assert_equal(event['name'], '001')
+        nose.tools.assert_equal(event['name'], '00001')
 
         event = helpers.call_action('event_create',
                 context={'user': self.user['name']},
                 users=[{'name': self.user, 'capacity': 'admin'}])
 
-        nose.tools.assert_equal(event['name'], '002')
+        nose.tools.assert_equal(event['name'], '00002')
