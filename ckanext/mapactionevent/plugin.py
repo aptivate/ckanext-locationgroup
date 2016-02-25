@@ -12,8 +12,6 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IRoutes, inherit=True)
-    # plugins.implements(plugins.IGroupController, inherit=True)
-
 
     # IRoutes
 
@@ -21,26 +19,6 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         map.connect('/', controller='ckanext.mapactionevent.controllers.homecontroller:HomeController', action='index')
         map.connect('/%s/new' % group_type, controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='new')
         return map
-
-
-    # IGroupController
-
-    def create(self, entity):
-        # import pdb; pdb.set_trace()
-        print entity
-        pass
-
-    def after_create(self, context, pkg_dict):
-        '''
-            Extensions will receive the validated data dict after the package
-            has been created (Note that the create method will return a package
-            domain object, which may not include all fields). Also the newly
-            created package id will be added to the dict.
-        '''
-        # import pdb; pdb.set_trace()
-        print context, pkg_dict
-        pass
-
 
     # IActions
 

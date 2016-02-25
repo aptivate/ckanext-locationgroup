@@ -48,9 +48,8 @@ class HomeController(HomeController):
                 'license': _('Licenses'),
             }
 
-            events = logic.get_action('group_list')(
+            c.events = logic.get_action('group_list')(
                     context, {'type': 'event', 'all_fields': True})
-            c.events = events
 
         except search.SearchError:
             c.package_count = 0
