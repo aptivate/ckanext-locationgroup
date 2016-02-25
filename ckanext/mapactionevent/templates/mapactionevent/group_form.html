@@ -5,12 +5,14 @@
     {{ form.input('title', label=_('Name'), id='field-name', placeholder=_('Event name'), value=data.title, error=errors.title, classes=['control-full'], attrs=attrs) }}
 
     {# Perhaps these should be moved into the controller? #}
-    {% set prefix = h.url_for(controller='group', action='read', id='') %}
+    {% set prefix = '/event/' %}  {# TODO: reverse custom group/event type #}
     {% set domain = h.url_for(controller='group', action='read', id='', qualified=true) %}
     {% set domain = domain|replace("http://", "")|replace("https://", "") %}
-    {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<group>'} %}
+    {% set attrs = {'data-module': '', 'data-module-prefix': domain, 'data-module-placeholder': '<group>'} %}
 
-    {# {{ form.prepend('name', label=_('URL'), prepend=prefix, id='field-url', placeholder=_('event-name'), value=data.name, error=errors.name, attrs=attrs, is_required=true) }} #}
+    {% call form.prepend('name', label=_('Operation ID'), prepend=prefix, id='field-opid', placeholder=_(''), value=data.name, error=errors.name, attrs=attrs, is_required=false) %}
+      {{ form.info(_("Leave blank to generate a new Operation ID"), classes=['']) }}
+    {% endcall %}
 
     {{ form.markdown('description', label=_('Description'), id='field-description', placeholder=_('Event description...'), value=data.description, error=errors.description) }}
 

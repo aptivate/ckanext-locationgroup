@@ -6,17 +6,23 @@ def event_create(context, data_dict):
     """ Creates a 'event' type group with a custom unique identifier for the
     event """
 
-    existing_events = toolkit.get_action('group_list')(
-            context,
-            {'type': 'event', 'sort': 'name desc'})
-
-    if len(existing_events) == 0:
-        event_code = 1
+    if data_dict.get('name'):
+        name = data_dict.get('name')
     else:
-        event_code = int(existing_events[0]) + 1
+        # Generate a new operation ID
+        existing_events = toolkit.get_action('group_list')(
+                context,
+                {'type': 'event', 'sort': 'name desc'})
+
+        if len(existing_events) == 0:
+            event_code = 1
+        else:
+            event_code = int(existing_events[0]) + 1
+
+        name = str(event_code).zfill(5)
 
     data_dict.update({
-        'name': str(event_code).zfill(5),  # Zero pad required for validation
+        'name': name,
         'type':'event'
         })
 
