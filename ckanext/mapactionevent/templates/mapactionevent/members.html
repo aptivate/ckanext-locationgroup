@@ -1,0 +1,14 @@
+{% extends "group/members.html" %}
+
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('event_edit', _('Edit'), id=c.group_dict.name) }}
+  {{ h.build_nav_icon('event_members', _('Members'), id=c.group_dict.name) }}
+{% endblock %}
+
+{% block content_action %}
+  {% link_for _('View'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='read', id=c.group_dict.name, class_='btn', icon='eye-open' %}
+{% endblock %}
+
+{% block page_primary_action %}
+  {% link_for _('Add Member'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='member_new', id=c.group_dict.id, class_='btn btn-primary', icon='plus-sign-alt' %}
+{% endblock %}

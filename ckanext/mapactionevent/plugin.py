@@ -16,8 +16,12 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     # IRoutes
 
     def before_map(self, map):
-        map.connect('/', controller='ckanext.mapactionevent.controllers.homecontroller:HomeController', action='index')
-        map.connect('/%s/new' % group_type, controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='new')
+        map.connect('/',
+                controller='ckanext.mapactionevent.controllers.homecontroller:HomeController',
+                action='index')
+        map.connect('/%s/new' % group_type,
+                controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+                action='new')
         return map
 
     # IActions
@@ -36,6 +40,9 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     # IGroupForm
 
+    def group_controller(self):
+        return "ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController"
+
     def group_types(self):
         return (group_type,)
 
@@ -44,3 +51,13 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     def group_form(self):
         return 'mapactionevent/group_form.html'
+
+    def index_template(self):
+        return 'mapactionevent/index.html'
+
+    def edit_template(self):
+        return 'mapactionevent/edit.html'
+
+    def read_template(self):
+        return 'mapactionevent/read.html'
+
