@@ -10,7 +10,7 @@
     <p class="empty">
       {{ _('You are not a member of any groups.') }}
       {% if h.check_access('group_create') %}
-        {% link_for _('Create one now?'), controller='group', action='new' %}
+        {% link_for _('Create one now?'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='new' %}
       {% endif %}
     </p>
   {% endif %}
