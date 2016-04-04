@@ -1,0 +1,5 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  <li>{{ h.nav_link(_('Events'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='index') }}</li>
+{% endblock %}
