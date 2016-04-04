@@ -52,6 +52,9 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     def group_form(self):
         return 'mapactionevent/group_form.html'
 
+    def new_template(self):
+        return 'mapactionevent/new.html'
+
     def index_template(self):
         return 'mapactionevent/index.html'
 
