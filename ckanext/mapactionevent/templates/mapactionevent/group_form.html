@@ -30,3 +30,11 @@
     {{ _('Create Event') }}
   {%- endif -%}
 {% endblock %}
+
+
+{% block delete_button %}
+  {% if h.check_access('group_delete', {'id': data.id})  %}
+    {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Event?')}) %}
+    <a class="btn btn-danger pull-left" href="{% url_for 'event_delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete Event') }}{% endblock %}</a>
+  {% endif %}
+{% endblock %}

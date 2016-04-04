@@ -22,6 +22,15 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         map.connect('/%s/new' % group_type,
                 controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
                 action='new')
+        # TODO: IGroupForm register_group_plugins doesn't support delete (in
+        # the <group_type>_action mapping). I'm not sure why this is, but we
+        # implement it here instead:
+        map.connect('%s_delete' % group_type, '/%s/delete/{id}' % group_type,
+                controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+                action='delete')
+
+        return map
+
         return map
 
     # IActions
