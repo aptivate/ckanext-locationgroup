@@ -9,3 +9,8 @@
     {% link_for _('Add Event'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='new', class_='btn btn-primary', icon='plus-sign-alt' %}
   {% endif %}
 {% endblock %}
+
+{% block groups_search_form %}
+{% snippet 'group/snippets/event_search_form.html', form_id='group-search-form', type='event', query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, placeholder=_('Search events...'), show_empty=request.params, no_bottom_border=true if c.page.items, sorting = [(_('Name Ascending'), 'title asc'), (_('Name Descending'), 'title desc')] %}
+{% endblock %}
+
