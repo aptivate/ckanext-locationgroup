@@ -1,5 +1,7 @@
 {% extends "group/index.html" %}
 
+{% block subtitle %}{{ _('Events') }}{% endblock %}
+
 {% block breadcrumb_content %}
   <li class="active">{% link_for _('Events'), controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController', action='index' %}</li>
 {% endblock %}
