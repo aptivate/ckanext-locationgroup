@@ -12,6 +12,34 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IFacets, inherit=True)
+
+
+    # IFacets
+    def dataset_facets(self, facets_dict, package_type):
+        if facets_dict.has_key('organization'):
+            facets_dict.pop('organization')
+        
+        if facets_dict.has_key('tags'):
+            facets_dict.pop('tags')
+
+        facets_dict['groups'] = plugins.toolkit._('Events')
+        return facets_dict
+
+
+    def group_facets(self, facets_dict, group_type, package_type):
+        if facets_dict.has_key('organization'):
+            facets_dict.pop('organization')
+        
+        if facets_dict.has_key('tags'):
+            facets_dict.pop('tags')
+
+        if facets_dict.has_key('groups'):
+            facets_dict.pop('groups')
+
+        return facets_dict
+
+
 
     # IRoutes
 
