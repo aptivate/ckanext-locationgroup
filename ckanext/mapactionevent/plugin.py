@@ -57,6 +57,10 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
                 controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
                 action='delete')
 
+        map.connect('%s_about' % group_type, '/%s/about/{id}' % group_type,
+                    controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+                    action='about')
+
         map.redirect('/group', '/event')
         map.redirect('/group/{url:.*}', '/event/{url}')
 
@@ -101,3 +105,6 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     def read_template(self):
         return 'mapactionevent/read.html'
+
+    def about_template(self):
+        return 'mapactionevent/about.html'
