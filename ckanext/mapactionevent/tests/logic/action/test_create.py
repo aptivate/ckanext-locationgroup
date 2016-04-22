@@ -35,3 +35,18 @@ class TestCreateEvent(custom_helpers.FunctionalTestBaseClass):
                 users=[{'name': self.user, 'capacity': 'admin'}])
 
         nose.tools.assert_equal(event['name'], '00002')
+
+        #Create an event with a non-numeric ID
+        event = helpers.call_action('event_create',
+                context={'user': self.user['name']},
+                users=[{'name': self.user, 'capacity': 'admin'}],
+                id='nonnumericid',
+                name='nonnumericid')
+
+        nose.tools.assert_equal(event['name'], 'nonnumericid')
+
+        event = helpers.call_action('event_create',
+                context={'user': self.user['name']},
+                users=[{'name': self.user, 'capacity': 'admin'}])
+
+        nose.tools.assert_equal(event['name'], '00003')
