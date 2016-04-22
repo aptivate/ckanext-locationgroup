@@ -14,10 +14,13 @@ def event_create(context, data_dict):
                 context,
                 {'type': 'event', 'sort': 'name desc'})
 
-        if len(existing_events) == 0:
-            event_code = 1
-        else:
-            event_code = int(existing_events[0]) + 1
+
+        event_code = 1  #default value, if there are no existing numericly named events
+
+        for event in existing_events:
+            if event.isdigit():
+                event_code = int(event) + 1
+                break
 
         name = str(event_code).zfill(5)
 
