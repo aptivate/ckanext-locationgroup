@@ -11,11 +11,12 @@ def event_create(context, data_dict):
     else:
         # Generate a new operation ID
         existing_events = toolkit.get_action('group_list')(
-                context,
-                {'type': 'event', 'sort': 'name desc'})
+            context,
+            {'type': 'event', 'sort': 'name desc'})
 
-
-        event_code = 1  #default value, if there are no existing numericly named events
+        # default value, if there are no existing
+        # numerically named events
+        event_code = 1
 
         for event in existing_events:
             if event.isdigit():
@@ -26,8 +27,8 @@ def event_create(context, data_dict):
 
     data_dict.update({
         'name': name,
-        'type':'event'
-        })
+        'type': 'event'
+    })
 
     try:
         foo = toolkit.get_action('group_create')(
