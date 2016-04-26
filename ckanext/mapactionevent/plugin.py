@@ -87,6 +87,34 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         toolkit.add_resource('fanstatic', 'mapactionevent')
 
     # IGroupForm
+    def form_to_db_schema_options(self, options):
+        ''' This allows us to select different schemas for different
+        purpose eg via the web interface or via the api or creation vs
+        updating. It is optional and if not available form_to_db_schema
+        should be used.
+        If a context is provided, and it contains a schema, it will be
+        returned.
+        '''
+        schema = options.get('context', {}).get('schema', None)
+        if schema:
+            return schema
+
+        if options.get('api'):
+            if options.get('type') == 'create':
+                return self.form_to_db_schema_api_create()
+            else:
+                return logic.schema.default_update_group_schema()
+        else:
+            return self.form_to_db_schema()
+
+    def form_to_db_schema_api_create(self):
+        schema = logic.schema.default_group_schema()
+
+        # Allow created date to be set explicitly on events
+        schema['created'] = [ignore_missing]
+
+        return schema
+
     def form_to_db_schema(self):
         schema = logic.schema.group_form_schema()
 
