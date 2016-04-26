@@ -30,10 +30,21 @@ def _get_group_new_page(app, group_type):
     return env, response
 
 
-class TestGroupControllerNew(helpers.FunctionalTestBase):
+def _get_group_index_page(app, group_type):
+    user = factories.User()
+    env = {'REMOTE_USER': user['name'].encode('ascii')}
+    # See ckan.plugins.register_group_plugins
+    response = app.get(
+        toolkit.url_for('%s_index' % group_type),
+        extra_environ=env,
+    )
+    return env, response
+
+
+class TestEventGroupController(helpers.FunctionalTestBase):
     @classmethod
     def setup_class(cls):
-        super(TestGroupControllerNew, cls).setup_class()
+        super(TestEventGroupController, cls).setup_class()
         # Load the plugin under test so that the hooks get inserted
         # eg. the plugins group_types are added.
         plugins.load('mapactionevent')
@@ -41,7 +52,7 @@ class TestGroupControllerNew(helpers.FunctionalTestBase):
     @classmethod
     def teardown_class(cls):
         plugins.unload('mapactionevent')
-        super(TestGroupControllerNew, cls).teardown_class()
+        super(TestEventGroupController, cls).teardown_class()
 
     def test_save(self):
         app = self._get_test_app()
@@ -65,3 +76,16 @@ class TestGroupControllerNew(helpers.FunctionalTestBase):
         assert_equals(group.title, 'title')
         assert_equals(group.type, custom_group_type)
         assert_equals(group.state, 'active')
+
+    def test_index_lists_groups(self):
+        user = factories.User()
+        event_a = helpers.call_action(
+            'event_create',
+            context={'user': user['name']},
+            title='Albania Floods, January 2010',
+            users=[{'name': user, 'capacity': 'admin'}])
+
+        app = self._get_test_app()
+        env, response = _get_group_index_page(app, custom_group_type)
+
+        assert_true(event_a['title'] in response)
