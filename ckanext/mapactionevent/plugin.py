@@ -1,7 +1,12 @@
+from ckan import logic
+
+from ckan.lib.navl.validators import ignore_missing
+
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
 import ckanext.mapactionevent.logic.action.create
+import ckanext.mapactionevent.logic.action.get
 
 
 group_type = 'event'
@@ -19,7 +24,7 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     def dataset_facets(self, facets_dict, package_type):
         if facets_dict.has_key('organization'):
             facets_dict.pop('organization')
-        
+
         if facets_dict.has_key('tags'):
             facets_dict.pop('tags')
 
@@ -30,7 +35,7 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     def group_facets(self, facets_dict, group_type, package_type):
         if facets_dict.has_key('organization'):
             facets_dict.pop('organization')
-        
+
         if facets_dict.has_key('tags'):
             facets_dict.pop('tags')
 
@@ -71,6 +76,7 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     def get_actions(self):
         return {
             'event_create': ckanext.mapactionevent.logic.action.create.event_create,
+            'event_list': ckanext.mapactionevent.logic.action.get.event_list,
         }
 
     # IConfigurer
@@ -81,6 +87,13 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         toolkit.add_resource('fanstatic', 'mapactionevent')
 
     # IGroupForm
+    def form_to_db_schema(self):
+        schema = logic.schema.group_form_schema()
+
+        # Allow created date to be set explicitly on events
+        schema['created'] = [ignore_missing]
+
+        return schema
 
     def group_controller(self):
         return "ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController"

@@ -1,3 +1,6 @@
+from bs4 import BeautifulSoup
+from datetime import datetime
+
 import nose.tools
 
 import ckan.tests.factories as factories
@@ -77,15 +80,36 @@ class TestEventGroupController(helpers.FunctionalTestBase):
         assert_equals(group.type, custom_group_type)
         assert_equals(group.state, 'active')
 
-    def test_index_lists_groups(self):
+    def test_index_lists_events_in_order_of_date(self):
         user = factories.User()
-        event_a = helpers.call_action(
+        event_2010 = helpers.call_action(
             'event_create',
             context={'user': user['name']},
             title='Albania Floods, January 2010',
+            created=datetime(2010, 1, 1),
+            users=[{'name': user, 'capacity': 'admin'}])
+
+        event_2009 = helpers.call_action(
+            'event_create',
+            context={'user': user['name']},
+            title='Benin Floods, July 2009',
+            created=datetime(2009, 7, 1),
+            users=[{'name': user, 'capacity': 'admin'}])
+
+        event_2014 = helpers.call_action(
+            'event_create',
+            context={'user': user['name']},
+            title='Cape Verde, December 2014',
+            created=datetime(2014, 12, 1),
             users=[{'name': user, 'capacity': 'admin'}])
 
         app = self._get_test_app()
         env, response = _get_group_index_page(app, custom_group_type)
 
-        assert_true(event_a['title'] in response)
+        html = BeautifulSoup(response.body)
+
+        titles = [u.string.strip() for u in html.select('.simple-event-list li a')]
+
+        assert_equals(titles, [event_2014['title'],
+                               event_2010['title'],
+                               event_2009['title']])

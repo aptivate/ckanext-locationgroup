@@ -20,6 +20,9 @@ class EventGroupController(group.GroupController):
         ''' select the correct group/org action '''
         if action_name == 'group_create':
             action_name = 'event_create'
+        elif action_name == 'group_list':
+            action_name = 'event_list'
+
         return super(EventGroupController, self)._action(action_name)
 
     def _render_template(self, template_name, group_type):
