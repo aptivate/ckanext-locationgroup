@@ -4,7 +4,6 @@ import ckan.tests.factories as factories
 import ckan.tests.helpers as helpers
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import ckanext.mapactionimporter.tests.helpers as custom_helpers
 
 assert_equals = nose.tools.assert_equals
 assert_true = nose.tools.assert_true
@@ -53,16 +52,16 @@ class TestGroupControllerNew(helpers.FunctionalTestBase):
         form['name'] = 'test'
         form['description'] = 'description'
 
-        import pdb; pdb.set_trace()
-        response = submit_and_follow(app, form, env, 'save')
-        # response = submit_and_follow(app, form, env, name='save', value='Create Event')
+        # TODO: Doesn't seem to work without this
+        form.fields['save'][0].force_value('Create Event')
+        response = submit_and_follow(app, form, env, name='save')
 
         # check correct redirect
         assert_equals(response.req.url,
-                     'http://localhost/%s/saved' % custom_group_type)
+                      'http://localhost/%s/test' % custom_group_type)
 
         # check saved ok
-        group = model.Group.by_name(u'saved')
-        assert_equals(group.title, u'')
+        group = model.Group.by_name(u'test')
+        assert_equals(group.title, 'title')
         assert_equals(group.type, custom_group_type)
         assert_equals(group.state, 'active')
