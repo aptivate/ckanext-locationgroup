@@ -31,10 +31,10 @@ def event_create(context, data_dict):
     })
 
     try:
-        foo = toolkit.get_action('group_create')(
+        event = toolkit.get_action('group_create')(
             context,
             data_dict=data_dict)
     except (logic.NotFound) as e:
-        raise toolkit.ValidationError("foo %s" % e)
+        raise toolkit.ValidationError("event %s" % e)
 
-    return foo
+    return event
