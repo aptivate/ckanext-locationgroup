@@ -22,6 +22,18 @@ submit_and_follow = helpers.submit_and_follow
 custom_group_type = 'event'
 
 
+def _get_home_index_page(app):
+    user = factories.User()
+    env = {'REMOTE_USER': user['name'].encode('ascii')}
+
+    response = app.get(
+        toolkit.url_for('/'),
+        extra_environ=env,
+    )
+
+    return env, response
+
+
 def _get_group_new_page(app, group_type):
     user = factories.User()
     env = {'REMOTE_USER': user['name'].encode('ascii')}
@@ -44,10 +56,19 @@ def _get_group_index_page(app, group_type):
     return env, response
 
 
-class TestEventGroupController(helpers.FunctionalTestBase):
+def _get_new_event(user, **kwargs):
+    return helpers.call_action(
+        'event_create',
+        context={'user': user['name']},
+        users=[{'name': user, 'capacity': 'admin'}],
+        **kwargs
+    )
+
+
+class ControllerTestBase(helpers.FunctionalTestBase):
     @classmethod
     def setup_class(cls):
-        super(TestEventGroupController, cls).setup_class()
+        super(ControllerTestBase, cls).setup_class()
         # Load the plugin under test so that the hooks get inserted
         # eg. the plugins group_types are added.
         plugins.load('mapactionevent')
@@ -55,8 +76,10 @@ class TestEventGroupController(helpers.FunctionalTestBase):
     @classmethod
     def teardown_class(cls):
         plugins.unload('mapactionevent')
-        super(TestEventGroupController, cls).teardown_class()
+        super(ControllerTestBase, cls).teardown_class()
 
+
+class TestEventGroupController(ControllerTestBase):
     def test_save(self):
         app = self._get_test_app()
         env, response = _get_group_new_page(app, custom_group_type)
@@ -82,26 +105,23 @@ class TestEventGroupController(helpers.FunctionalTestBase):
 
     def test_index_lists_events_in_order_of_date(self):
         user = factories.User()
-        event_2010 = helpers.call_action(
-            'event_create',
-            context={'user': user['name']},
+        event_2010 = _get_new_event(
+            user,
             title='Albania Floods, January 2010',
-            created=datetime(2010, 1, 1),
-            users=[{'name': user, 'capacity': 'admin'}])
+            created=datetime(2010, 1, 1)
+        )
 
-        event_2009 = helpers.call_action(
-            'event_create',
-            context={'user': user['name']},
+        event_2009 = _get_new_event(
+            user,
             title='Benin Floods, July 2009',
-            created=datetime(2009, 7, 1),
-            users=[{'name': user, 'capacity': 'admin'}])
+            created=datetime(2009, 7, 1)
+        )
 
-        event_2014 = helpers.call_action(
-            'event_create',
-            context={'user': user['name']},
+        event_2014 = _get_new_event(
+            user,
             title='Cape Verde, December 2014',
-            created=datetime(2014, 12, 1),
-            users=[{'name': user, 'capacity': 'admin'}])
+            created=datetime(2014, 12, 1)
+        )
 
         app = self._get_test_app()
         env, response = _get_group_index_page(app, custom_group_type)
@@ -109,6 +129,40 @@ class TestEventGroupController(helpers.FunctionalTestBase):
         html = BeautifulSoup(response.body)
 
         titles = [u.string.strip() for u in html.select('.simple-event-list li a')]
+
+        assert_equals(titles, [event_2014['title'],
+                               event_2010['title'],
+                               event_2009['title']])
+
+
+class TestHomeController(ControllerTestBase):
+    def test_index_lists_events_in_order_of_date(self):
+        user = factories.User()
+        event_2010 = _get_new_event(
+            user,
+            title='Albania Floods, January 2010',
+            created=datetime(2010, 1, 1)
+        )
+
+        event_2009 = _get_new_event(
+            user,
+            title='Benin Floods, July 2009',
+            created=datetime(2009, 7, 1)
+        )
+
+        event_2014 = _get_new_event(
+            user,
+            title='Cape Verde, December 2014',
+            created=datetime(2014, 12, 1)
+        )
+
+        app = self._get_test_app()
+        env, response = _get_home_index_page(app)
+
+        html = BeautifulSoup(response.body)
+
+        titles = [u.string.strip()
+                  for u in html.select('.simple-event-list li a')]
 
         assert_equals(titles, [event_2014['title'],
                                event_2010['title'],
