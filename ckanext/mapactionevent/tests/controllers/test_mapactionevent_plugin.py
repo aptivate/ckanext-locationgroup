@@ -80,7 +80,7 @@ class ControllerTestBase(helpers.FunctionalTestBase):
 
 
 class TestEventGroupController(ControllerTestBase):
-    def test_save(self):
+    def test_save_creates_event(self):
         app = self._get_test_app()
         env, response = _get_group_new_page(app, custom_group_type)
 
@@ -103,25 +103,72 @@ class TestEventGroupController(ControllerTestBase):
         assert_equals(group.type, custom_group_type)
         assert_equals(group.state, 'active')
 
+    def test_event_name_required(self):
+        app = self._get_test_app()
+        env, response = _get_group_new_page(app, custom_group_type)
+
+        form = response.forms['group-edit']
+        form['title'] = 'title'
+        form['name'] = ''
+        form['description'] = 'description'
+
+        # TODO: Doesn't seem to work without this
+        form.fields['save'][0].force_value('Create Event')
+        response = webtest_submit(form, name='save', extra_environ=env)
+
+        # check correct redirect
+        assert_equals(response.req.url,
+                      'http://localhost/%s/new' % custom_group_type)
+
+        assert_true('Name: Missing value' in response)
+
+    def test_cannot_have_two_identical_event_names(self):
+        user = factories.User()
+
+        _get_new_event(
+            user,
+            title='Albania Floods, January 2010',
+            created=datetime(2010, 1, 1),
+            name='albania-floods-2010')
+
+        app = self._get_test_app()
+        env, response = _get_group_new_page(app, custom_group_type)
+
+        form = response.forms['group-edit']
+        form['title'] = 'title'
+        form['name'] = 'albania-floods-2010'
+        form['description'] = 'description'
+
+        # TODO: Doesn't seem to work without this
+        form.fields['save'][0].force_value('Create Event')
+        response = webtest_submit(form, name='save', extra_environ=env)
+
+        # check correct redirect
+        assert_equals(response.req.url,
+                      'http://localhost/%s/new' % custom_group_type)
+
+        assert_true('The form contains invalid entries' in response)
+        assert_true('Name: Group name already exists in database' in response)
+
     def test_index_lists_events_in_order_of_date(self):
         user = factories.User()
         event_2010 = _get_new_event(
             user,
             title='Albania Floods, January 2010',
-            created=datetime(2010, 1, 1)
-        )
+            created=datetime(2010, 1, 1),
+            name='albania-floods-2010')
 
         event_2009 = _get_new_event(
             user,
             title='Benin Floods, July 2009',
-            created=datetime(2009, 7, 1)
-        )
+            created=datetime(2009, 7, 1),
+            name='benin-floods-2009')
 
         event_2014 = _get_new_event(
             user,
             title='Cape Verde, December 2014',
-            created=datetime(2014, 12, 1)
-        )
+            created=datetime(2014, 12, 1),
+            name='cape-verde-2014')
 
         app = self._get_test_app()
         env, response = _get_group_index_page(app, custom_group_type)
@@ -141,20 +188,20 @@ class TestHomeController(ControllerTestBase):
         event_2010 = _get_new_event(
             user,
             title='Albania Floods, January 2010',
-            created=datetime(2010, 1, 1)
-        )
+            created=datetime(2010, 1, 1),
+            name='albania-floods-2010')
 
         event_2009 = _get_new_event(
             user,
             title='Benin Floods, July 2009',
-            created=datetime(2009, 7, 1)
-        )
+            created=datetime(2009, 7, 1),
+            name='benin-floods-2009')
 
         event_2014 = _get_new_event(
             user,
             title='Cape Verde, December 2014',
-            created=datetime(2014, 12, 1)
-        )
+            created=datetime(2014, 12, 1),
+            name='cape-verde-2014')
 
         app = self._get_test_app()
         env, response = _get_home_index_page(app)

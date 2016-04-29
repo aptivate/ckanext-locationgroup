@@ -1,4 +1,5 @@
 from datetime import datetime
+from slugify import slugify
 
 import nose.tools
 
@@ -138,5 +139,6 @@ class TestEventList(custom_helpers.FunctionalTestBaseClass):
             'event_create',
             context={'user': self.user['name']},
             title=title,
+            name=slugify(title),
             created=date,
             users=[{'name': self.user, 'capacity': 'admin'}])
