@@ -77,20 +77,6 @@ class DatasetFacetsTest(unittest.TestCase):
             'license_id': _('Licenses'),
         }
 
-    def test_removes_organization(self):
-        plugin = MapactioneventPlugin()
-        facets_dict = plugin.dataset_facets(self.default_facet_titles,
-                                            'dataset')
-
-        self.assertTrue('organization' not in facets_dict)
-
-    def test_removes_tags(self):
-        plugin = MapactioneventPlugin()
-        facets_dict = plugin.dataset_facets(self.default_facet_titles,
-                                            'dataset')
-
-        self.assertTrue('tags' not in facets_dict)
-
     def test_groups_renamed_events(self):
         plugin = MapactioneventPlugin()
         facets_dict = plugin.dataset_facets(self.default_facet_titles,

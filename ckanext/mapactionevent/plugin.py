@@ -21,9 +21,6 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
-        facets_dict.pop('organization', False)
-        facets_dict.pop('tags', False)
-
         if 'groups' in facets_dict:
             facets_dict['groups'] = plugins.toolkit._('Events')
 
