@@ -97,3 +97,37 @@ class DatasetFacetsTest(unittest.TestCase):
                                             'dataset')
 
         self.assertEquals(facets_dict['groups'], 'Events')
+
+
+class GroupFacetsTest(unittest.TestCase):
+    def setUp(self):
+        super(GroupFacetsTest, self).setUp()
+        self.default_facet_titles = {'organization': _('Organizations'),
+                                     'groups': _('Groups'),
+                                     'tags': _('Tags'),
+                                     'res_format': _('Formats'),
+                                     'license_id': _('Licenses')}
+
+    def test_removes_organization(self):
+        plugin = MapactioneventPlugin()
+        facets_dict = plugin.group_facets(self.default_facet_titles,
+                                          'event',
+                                          'dataset')
+
+        self.assertTrue('organization' not in facets_dict)
+
+    def test_removes_tags(self):
+        plugin = MapactioneventPlugin()
+        facets_dict = plugin.group_facets(self.default_facet_titles,
+                                          'event',
+                                          'dataset')
+
+        self.assertTrue('tags' not in facets_dict)
+
+    def test_removes_groups(self):
+        plugin = MapactioneventPlugin()
+        facets_dict = plugin.group_facets(self.default_facet_titles,
+                                          'event',
+                                          'dataset')
+
+        self.assertTrue('groups' not in facets_dict)
