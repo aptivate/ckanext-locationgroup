@@ -36,6 +36,12 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
         return facets_dict
 
+    def organization_facets(self, facets_dict, group_type, package_type):
+        if 'groups' in facets_dict:
+            facets_dict['groups'] = plugins.toolkit._('Events')
+
+        return facets_dict
+
     # IRoutes
     def before_map(self, map):
         map.connect(
