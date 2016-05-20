@@ -98,6 +98,13 @@ class DatasetFacetsTest(unittest.TestCase):
 
         self.assertEquals(facets_dict['groups'], 'Events')
 
+    def test_facet_dict_is_left_empty(self):
+        plugin = MapactioneventPlugin()
+        facets_dict = plugin.dataset_facets({},
+                                            'dataset')
+
+        self.assertEquals(facets_dict, {})
+
 
 class GroupFacetsTest(unittest.TestCase):
     def setUp(self):
@@ -131,3 +138,11 @@ class GroupFacetsTest(unittest.TestCase):
                                           'dataset')
 
         self.assertTrue('groups' not in facets_dict)
+
+    def test_facet_dict_is_left_empty(self):
+        plugin = MapactioneventPlugin()
+        facets_dict = plugin.group_facets({},
+                                          'event',
+                                          'dataset')
+
+        self.assertEquals(facets_dict, {})

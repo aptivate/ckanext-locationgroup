@@ -19,52 +19,45 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IFacets, inherit=True)
 
-
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
-        if facets_dict.has_key('organization'):
-            facets_dict.pop('organization')
+        facets_dict.pop('organization', False)
+        facets_dict.pop('tags', False)
 
-        if facets_dict.has_key('tags'):
-            facets_dict.pop('tags')
+        if 'groups' in facets_dict:
+            facets_dict['groups'] = plugins.toolkit._('Events')
 
-        facets_dict['groups'] = plugins.toolkit._('Events')
         return facets_dict
-
 
     def group_facets(self, facets_dict, group_type, package_type):
-        if facets_dict.has_key('organization'):
-            facets_dict.pop('organization')
-
-        if facets_dict.has_key('tags'):
-            facets_dict.pop('tags')
-
-        if facets_dict.has_key('groups'):
-            facets_dict.pop('groups')
+        facets_dict.pop('organization', False)
+        facets_dict.pop('tags', False)
+        facets_dict.pop('groups', False)
 
         return facets_dict
 
-
-
     # IRoutes
-
     def before_map(self, map):
-        map.connect('/',
-                controller='ckanext.mapactionevent.controllers.homecontroller:HomeController',
-                action='index')
-        map.connect('/%s/new' % group_type,
-                controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
-                action='new')
+        map.connect(
+            '/',
+            controller='ckanext.mapactionevent.controllers.homecontroller:HomeController',
+            action='index')
+        map.connect(
+            '/%s/new' % group_type,
+            controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+            action='new')
         # TODO: IGroupForm register_group_plugins doesn't support delete (in
         # the <group_type>_action mapping). I'm not sure why this is, but we
         # implement it here instead:
-        map.connect('%s_delete' % group_type, '/%s/delete/{id}' % group_type,
-                controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
-                action='delete')
+        map.connect(
+            '%s_delete' % group_type, '/%s/delete/{id}' % group_type,
+            controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+            action='delete')
 
-        map.connect('%s_about' % group_type, '/%s/about/{id}' % group_type,
-                    controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
-                    action='about')
+        map.connect(
+            '%s_about' % group_type, '/%s/about/{id}' % group_type,
+            controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
+            action='about')
 
         map.redirect('/group', '/event')
         map.redirect('/group/{url:.*}', '/event/{url}')
