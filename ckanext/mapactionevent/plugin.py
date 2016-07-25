@@ -2,6 +2,7 @@ from ckan import logic
 
 from ckan.lib.navl.validators import ignore_missing
 
+import pylons.config as config
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
@@ -12,12 +13,30 @@ import ckanext.mapactionevent.logic.action.get
 group_type = 'event'
 
 
+def event_description_length():
+    '''Allows renaming of "Group"
+
+    To change this setting add to the
+    [app:main] section of your CKAN config file::
+
+      ckan.mapactiontheme.group_name = MyGroupName
+
+    Returns ``Group`` by default, if the setting is not in the config file.
+
+    :rtype: boolean
+    '''
+    value = config.get('ckan.mapactionevent.event_description_length', 200)
+    value = toolkit.asint(value)
+    return value
+
+
 class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IGroupForm, inherit=False)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IFacets, inherit=True)
+    plugins.implements(plugins.ITemplateHelpers)
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
@@ -102,6 +121,15 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
                 return logic.schema.default_update_group_schema()
         else:
             return self.form_to_db_schema()
+
+    
+    #ITemplateHelpers
+    def get_helpers(self):
+        return {
+            'event_description_length': event_description_length
+        }
+
+
 
     def form_to_db_schema_api_create(self):
         schema = logic.schema.default_group_schema()

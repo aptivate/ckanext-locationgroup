@@ -17,9 +17,17 @@ Example:
 {% set url = h.url_for(type ~ '_read', action='read', id=group.name) %}
 {% block item %}
 <li>
+    {% block image %}
+    <div class="image">
+      <a href="{{ group.url }}">
+        <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" width="190" height="118" alt="{{ group.name }}" />
+      </a>
+    </div>
+    {% endblock %}
+
   <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}">
   {{ _('{name}').format(name=group.display_name) }}
   </a>
-  <p>{{ group.description }}</p>
+  <p>{{ h.truncate(group.description, h.event_description_length(), whole_word=True) }}</p>
 </li>
 {% endblock %}
