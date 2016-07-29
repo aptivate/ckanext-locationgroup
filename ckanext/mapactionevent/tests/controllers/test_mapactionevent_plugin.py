@@ -175,7 +175,8 @@ class TestEventGroupController(ControllerTestBase):
 
         html = BeautifulSoup(response.body)
 
-        titles = [u.string.strip() for u in html.select('.simple-event-list li a')]
+        titles = [u.string.strip()
+                  for u in html.select('.simple-event-list li > a')]
 
         assert_equals(titles, [event_2014['title'],
                                event_2010['title'],
@@ -209,7 +210,7 @@ class TestHomeController(ControllerTestBase):
         html = BeautifulSoup(response.body)
 
         titles = [u.string.strip()
-                  for u in html.select('.simple-event-list li a')]
+                  for u in html.select('.simple-event-list li > a')]
 
         assert_equals(titles, [event_2014['title'],
                                event_2010['title'],
