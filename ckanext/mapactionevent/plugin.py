@@ -14,17 +14,6 @@ group_type = 'event'
 
 
 def event_description_length():
-    '''Allows renaming of "Group"
-
-    To change this setting add to the
-    [app:main] section of your CKAN config file::
-
-      ckan.mapactiontheme.group_name = MyGroupName
-
-    Returns ``Group`` by default, if the setting is not in the config file.
-
-    :rtype: boolean
-    '''
     value = config.get('ckan.mapactionevent.event_description_length', 200)
     value = toolkit.asint(value)
     return value
@@ -122,7 +111,7 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         else:
             return self.form_to_db_schema()
 
-    
+
     #ITemplateHelpers
     def get_helpers(self):
         return {
