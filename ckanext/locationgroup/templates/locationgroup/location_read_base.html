@@ -1,0 +1,16 @@
+{% extends "group/read.html" %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for c.group_dict.display_name|truncate(35), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='read', id=c.group_dict.name %}</li>
+{% endblock %}
+
+{% block content_action %}
+  {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
+    {% link_for _('Manage'), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='edit', id=c.group_dict.name, class_='btn', icon='wrench' %}
+  {% endif %}
+{% endblock %}
+
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('location_read', _('Datasets'), id=c.group_dict.name) }}
+  {{ h.build_nav_icon('location_about', _('About'), id=c.group_dict.name) }}
+{% endblock %}

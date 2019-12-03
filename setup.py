@@ -10,18 +10,18 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='''ckanext-mapactionevent''',
+    name='''ckanext-locationgroup''',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
     version='1.0.0',
 
-    description='''"MapAction event group extension for CKAN"''',
+    description='''"MapAction location group extension for CKAN"''',
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/aptivate/ckanext-mapactionevent',
+    url='https://github.com/aptivate/ckanext-locationgroup',
 
     # Author details
     author='''Aptivate''',
@@ -49,7 +49,7 @@ setup(
 
 
     # What does your project relate to?
-    keywords='''CKAN "MapAction Event"''',
+    keywords='''CKAN "MapAction Location"''',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -81,7 +81,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        mapactionevent=ckanext.mapactionevent.plugin:MapactioneventPlugin
+        locationgroup=ckanext.locationgroup.plugin:MapactionlocationPlugin
 	[babel.extractors]
 	ckan = ckan.lib.extract:extract_ckan
     ''',

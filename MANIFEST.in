@@ -1,2 +1,2 @@
 include README.rst
-recursive-include ckanext/mapactionevent *.html *.json *.js *.less *.css
+recursive-include ckanext/locationgroup *.html *.json *.js *.less *.css

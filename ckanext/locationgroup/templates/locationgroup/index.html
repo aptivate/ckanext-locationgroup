@@ -1,0 +1,21 @@
+{% extends "group/index.html" %}
+
+{% block subtitle %}{{ _('Locations') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Locations'), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='index' %}</li>
+{% endblock %}
+
+{% block page_primary_action %}
+  {% if h.check_access('group_create') %}
+    {% link_for _('Add Location'), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='new', class_='btn btn-primary', icon='plus-sign-alt' %}
+  {% endif %}
+{% endblock %}
+
+{% block groups_search_form %}
+{% snippet 'group/snippets/location_search_form.html', form_id='group-search-form', type='location', query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, placeholder=_('Search locations...'), show_empty=request.params, no_bottom_border=true if c.page.items, sorting = [(_('Most Recent'), 'created desc'), (_('Name Ascending'), 'title asc'), (_('Name Descending'), 'title desc')] %}
+{% endblock %}
+
+{% block secondary_content %}
+    {# {% snippet "group/snippets/helper.html" %} #}
+{% endblock %}

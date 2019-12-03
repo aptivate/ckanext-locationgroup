@@ -1,0 +1,5 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  <li>{{ h.nav_link(_('Locations'), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='index') }}</li>
+{% endblock %}

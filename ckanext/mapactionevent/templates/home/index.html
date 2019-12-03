@@ -1,9 +1,0 @@
-{% ckan_extends %}
-
-{% block primary_content %}
-  {% if c.events %}
-    <div class="wide">
-      {% snippet "group/snippets/group_list.html", groups=c.events %}
-    </div>
-  {% endif %}
-{% endblock %}

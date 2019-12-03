@@ -2,34 +2,34 @@
    these badges work. The necessary Travis and Coverage config files have been
    generated for you.
 
-.. image:: https://travis-ci.org/aptivate/ckanext-mapactionevent.svg?branch=master
-    :target: https://travis-ci.org/aptivate/ckanext-mapactionevent
+.. image:: https://travis-ci.org/aptivate/ckanext-locationgroup.svg?branch=master
+    :target: https://travis-ci.org/aptivate/ckanext-locationgroup
 
-.. image:: https://coveralls.io/repos/aptivate/ckanext-mapactionevent/badge.svg
-  :target: https://coveralls.io/r/aptivate/ckanext-mapactionevent
+.. image:: https://coveralls.io/repos/aptivate/ckanext-locationgroup/badge.svg
+  :target: https://coveralls.io/r/aptivate/ckanext-locationgroup
 
-.. image:: https://pypip.in/download/ckanext-mapactionevent/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-mapactionevent/
+.. image:: https://pypip.in/download/ckanext-locationgroup/badge.svg
+    :target: https://pypi.python.org/pypi//ckanext-locationgroup/
     :alt: Downloads
 
-.. image:: https://pypip.in/version/ckanext-mapactionevent/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mapactionevent/
+.. image:: https://pypip.in/version/ckanext-locationgroup/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
     :alt: Latest Version
 
-.. image:: https://pypip.in/py_versions/ckanext-mapactionevent/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mapactionevent/
+.. image:: https://pypip.in/py_versions/ckanext-locationgroup/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
     :alt: Supported Python versions
 
-.. image:: https://pypip.in/status/ckanext-mapactionevent/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mapactionevent/
+.. image:: https://pypip.in/status/ckanext-locationgroup/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
     :alt: Development Status
 
-.. image:: https://pypip.in/license/ckanext-mapactionevent/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-mapactionevent/
+.. image:: https://pypip.in/license/ckanext-locationgroup/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
     :alt: License
 
 =============
-ckanext-mapactionevent
+ckanext-locationgroup
 =============
 
 .. Put a description of your extension here:
@@ -53,17 +53,17 @@ Installation
    For example installing any non-Python dependencies or adding any required
    config settings.
 
-To install ckanext-mapactionevent:
+To install ckanext-locationgroup:
 
 1. Activate your CKAN virtual environment, for example::
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Install the ckanext-mapactionevent Python package into your virtual environment::
+2. Install the ckanext-locationgroup Python package into your virtual environment::
 
-     pip install ckanext-mapactionevent
+     pip install ckanext-locationgroup
 
-3. Add ``mapactionevent`` to the ``ckan.plugins`` setting in your CKAN
+3. Add ``locationgroup`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
 
@@ -80,18 +80,18 @@ Document any optional config settings here. For example::
 
     # The minimum number of hours to wait before re-checking a resource
     # (optional, default: 24).
-    ckanext.mapactionevent.some_setting = some_default_value
+    ckanext.locationgroup.some_setting = some_default_value
 
 
 ------------------------
 Development Installation
 ------------------------
 
-To install ckanext-mapactionevent for development, activate your CKAN virtualenv and
+To install ckanext-locationgroup for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com/aptivate/ckanext-mapactionevent.git
-    cd ckanext-mapactionevent
+    git clone https://github.com/aptivate/ckanext-locationgroup.git
+    cd ckanext-locationgroup
     python setup.py develop
     pip install -r dev-requirements.txt
 
@@ -107,15 +107,15 @@ To run the tests, do::
 To run the tests and produce a coverage report, first make sure you have
 coverage installed in your virtualenv (``pip install coverage``) then run::
 
-    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.mapactionevent --cover-inclusive --cover-erase --cover-tests
+    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.locationgroup --cover-inclusive --cover-erase --cover-tests
 
 
 ---------------------------------
-Registering ckanext-mapactionevent on PyPI
+Registering ckanext-locationgroup on PyPI
 ---------------------------------
 
-ckanext-mapactionevent should be availabe on PyPI as
-https://pypi.python.org/pypi/ckanext-mapactionevent. If that link doesn't work, then
+ckanext-locationgroup should be availabe on PyPI as
+https://pypi.python.org/pypi/ckanext-locationgroup. If that link doesn't work, then
 you can register the project on PyPI for the first time by following these
 steps:
 
@@ -140,10 +140,10 @@ steps:
 
 
 ----------------------------------------
-Releasing a New Version of ckanext-mapactionevent
+Releasing a New Version of ckanext-locationgroup
 ----------------------------------------
 
-ckanext-mapactionevent is availabe on PyPI as https://pypi.python.org/pypi/ckanext-mapactionevent.
+ckanext-locationgroup is availabe on PyPI as https://pypi.python.org/pypi/ckanext-locationgroup.
 To publish a new version to PyPI follow these steps:
 
 1. Update the version number in the ``setup.py`` file.
