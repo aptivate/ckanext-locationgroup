@@ -70,9 +70,6 @@ class LocationGroupPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
             controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController',
             action='about')
 
-        map.redirect('/group', '/location')
-        map.redirect('/group/{url:.*}', '/location/{url}')
-
         return map
 
     # IActions
