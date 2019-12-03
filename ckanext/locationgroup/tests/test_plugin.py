@@ -2,66 +2,58 @@ import unittest
 
 from ckan.common import _
 from ckan.lib.navl.validators import ignore
-from ckanext.locationgroup.plugin import MapactionlocationPlugin
+from ckanext.locationgroup.plugin import LocationGroupPlugin
 
 
 class SchemaTest(unittest.TestCase):
+    def setUp(self):
+        super(SchemaTest, self).setUp()
+        self.plugin = LocationGroupPlugin()
 
     def test_form_to_db_schema_allows_created(self):
-        plugin = MapactionlocationPlugin()
-        schema = plugin.form_to_db_schema()
+        schema = self.plugin.form_to_db_schema()
 
         self.assertTrue(ignore not in schema['created'])
 
     def test_form_to_db_schema_api_create_allows_created(self):
-        plugin = MapactionlocationPlugin()
-        schema = plugin.form_to_db_schema_api_create()
+        schema = self.plugin.form_to_db_schema_api_create()
 
         self.assertTrue(ignore not in schema['created'])
 
     def test_form_to_db_schema_api_update_ignores_created(self):
-        plugin = MapactionlocationPlugin()
-        schema = plugin.form_to_db_schema_api_create()
+        schema = self.plugin.form_to_db_schema_api_create()
 
         self.assertTrue(ignore not in schema['created'])
 
     def test_form_to_db_schema_options_api_create_allows_created(self):
-        plugin = MapactionlocationPlugin()
-
         options = {'api': 'something',
                    'type': 'create'}
 
-        schema = plugin.form_to_db_schema_options(options)
+        schema = self.plugin.form_to_db_schema_options(options)
 
         self.assertTrue(ignore not in schema['created'])
 
     def test_form_to_db_schema_options_api_update_ignores_created(self):
-        plugin = MapactionlocationPlugin()
-
         options = {'api': 'something',
                    'type': 'update'}
 
-        schema = plugin.form_to_db_schema_options(options)
+        schema = self.plugin.form_to_db_schema_options(options)
 
         self.assertTrue(ignore in schema['created'])
 
     def test_form_to_db_schema_options_not_api_allows_created(self):
-        plugin = MapactionlocationPlugin()
-
         options = {'api': False}
 
-        schema = plugin.form_to_db_schema_options(options)
+        schema = self.plugin.form_to_db_schema_options(options)
 
         self.assertTrue(ignore not in schema['created'])
 
     def test_form_to_db_schema_options_returns_schema(self):
-        plugin = MapactionlocationPlugin()
-
         my_schema = {'my schema': 'foo'}
 
         options = {'context': {'schema': my_schema}}
 
-        schema = plugin.form_to_db_schema_options(options)
+        schema = self.plugin.form_to_db_schema_options(options)
 
         self.assertEqual(schema, my_schema)
 
@@ -69,6 +61,7 @@ class SchemaTest(unittest.TestCase):
 class DatasetFacetsTest(unittest.TestCase):
     def setUp(self):
         super(DatasetFacetsTest, self).setUp()
+        self.plugin = LocationGroupPlugin()
         self.default_facet_titles = {
             'organization': _('Organizations'),
             'groups': _('Groups'),
@@ -78,15 +71,13 @@ class DatasetFacetsTest(unittest.TestCase):
         }
 
     def test_groups_renamed_locations(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.dataset_facets(self.default_facet_titles,
+        facets_dict = self.plugin.dataset_facets(self.default_facet_titles,
                                             'dataset')
 
         self.assertEquals(facets_dict['groups'], 'Locations')
 
     def test_facet_dict_is_left_empty(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.dataset_facets({},
+        facets_dict = self.plugin.dataset_facets({},
                                             'dataset')
 
         self.assertEquals(facets_dict, {})
@@ -95,6 +86,7 @@ class DatasetFacetsTest(unittest.TestCase):
 class GroupFacetsTest(unittest.TestCase):
     def setUp(self):
         super(GroupFacetsTest, self).setUp()
+        self.plugin = LocationGroupPlugin()
         self.default_facet_titles = {'organization': _('Organizations'),
                                      'groups': _('Groups'),
                                      'tags': _('Tags'),
@@ -102,32 +94,28 @@ class GroupFacetsTest(unittest.TestCase):
                                      'license_id': _('Licenses')}
 
     def test_removes_organization(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.group_facets(self.default_facet_titles,
+        facets_dict = self.plugin.group_facets(self.default_facet_titles,
                                           'location',
                                           'dataset')
 
         self.assertTrue('organization' not in facets_dict)
 
     def test_removes_tags(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.group_facets(self.default_facet_titles,
+        facets_dict = self.plugin.group_facets(self.default_facet_titles,
                                           'location',
                                           'dataset')
 
         self.assertTrue('tags' not in facets_dict)
 
     def test_removes_groups(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.group_facets(self.default_facet_titles,
+        facets_dict = self.plugin.group_facets(self.default_facet_titles,
                                           'location',
                                           'dataset')
 
         self.assertTrue('groups' not in facets_dict)
 
     def test_facet_dict_is_left_empty(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.group_facets({},
+        facets_dict = self.plugin.group_facets({},
                                           'location',
                                           'dataset')
 
@@ -137,6 +125,7 @@ class GroupFacetsTest(unittest.TestCase):
 class OrganizationFacetsTest(unittest.TestCase):
     def setUp(self):
         super(OrganizationFacetsTest, self).setUp()
+        self.plugin = LocationGroupPlugin()
         self.default_facet_titles = {'organization': _('Organizations'),
                                      'groups': _('Groups'),
                                      'tags': _('Tags'),
@@ -144,16 +133,14 @@ class OrganizationFacetsTest(unittest.TestCase):
                                      'license_id': _('Licenses')}
 
     def test_groups_renamed_locations(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.organization_facets(self.default_facet_titles,
+        facets_dict = self.plugin.organization_facets(self.default_facet_titles,
                                                  'organization',
                                                  'dataset')
 
         self.assertEquals(facets_dict['groups'], 'Locations')
 
     def test_facet_dict_is_left_empty(self):
-        plugin = MapactionlocationPlugin()
-        facets_dict = plugin.organization_facets({},
+        facets_dict = self.plugin.organization_facets({},
                                                  'organization',
                                                  'dataset')
 

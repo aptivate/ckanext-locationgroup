@@ -19,7 +19,7 @@ def location_description_length():
     return value
 
 
-class MapactionlocationPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
+class LocationGroupPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IGroupForm, inherit=False)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)

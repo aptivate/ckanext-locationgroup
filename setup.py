@@ -81,9 +81,9 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        locationgroup=ckanext.locationgroup.plugin:MapactionlocationPlugin
-	[babel.extractors]
-	ckan = ckan.lib.extract:extract_ckan
+        locationgroup=ckanext.locationgroup.plugin:LocationGroupPlugin
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
     ''',
 
     # If you are changing from the default layout of your extension, you may

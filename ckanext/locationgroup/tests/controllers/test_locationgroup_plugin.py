@@ -95,7 +95,7 @@ class TestLocationGroupController(ControllerTestBase):
 
         # check correct redirect
         assert_equals(response.req.url,
-                      'http://localhost/%s/test' % custom_group_type)
+                      'http://test.ckan.net/%s/test' % custom_group_type)
 
         # check saved ok
         group = model.Group.by_name(u'test')

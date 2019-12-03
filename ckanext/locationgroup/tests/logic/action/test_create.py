@@ -16,6 +16,6 @@ class TestCreateLocation(custom_helpers.FunctionalTestBaseClass):
                                     users=[
                                         {'name': self.user,
                                          'capacity': 'admin'}],
-                                    name='Central African Republic')
+                                    name='caf')
 
-        nose.tools.assert_equal(location['name'], 'Central African Republic')
+        nose.tools.assert_equal(location['name'], 'caf')
