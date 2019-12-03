@@ -10,7 +10,7 @@
     {% set domain = domain|replace("http://", "")|replace("https://", "") %}
     {% set attrs = {'data-module': '', 'data-module-prefix': domain, 'data-module-placeholder': '<group>'} %}
 
-    {% call form.prepend('name', label=_('Operation ID'), prepend=prefix, id='field-opid', placeholder=_(''), value=data.name, error=errors.name, attrs=attrs, is_required=true) %}
+    {% call form.prepend('name', label=_('Location ID'), prepend=prefix, id='field-opid', placeholder=_(''), value=data.name, error=errors.name, attrs=attrs, is_required=true) %}
     {% endcall %}
 
     {{ form.markdown('description', label=_('Description'), id='field-description', placeholder=_('Location description...'), value=data.description, error=errors.description) }}
