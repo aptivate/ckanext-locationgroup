@@ -36,6 +36,14 @@ ckanext-locationgroup
    What does it do? What features does it have?
    Consider including some screenshots or embedding a video!
 
+API usage examples, query by group_type using the 'type' parameter:
+
+# List all location groups:
+
+$ curl -q 'http://ckan.localdomain/api/3/action/group_list?limit=10&type=location'
+
+Note that group IDs must be unique across all types due to default CKAN schema.
+
 
 ------------
 Requirements
