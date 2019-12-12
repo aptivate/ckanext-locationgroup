@@ -99,9 +99,15 @@ To install ckanext-locationgroup for development, activate your CKAN virtualenv 
 do::
 
     git clone https://github.com/aptivate/ckanext-locationgroup.git
+    git submodule update --init --recursive  # bootstrap inclusion
     cd ckanext-locationgroup
     python setup.py develop
     pip install -r dev-requirements.txt
+
+   # Build the styles with sass
+
+   $ cd ckanext-locationgroup/ckanext/locationgroup/fanstatic/sass
+   $ sass  --watch .:../
 
 
 -----------------

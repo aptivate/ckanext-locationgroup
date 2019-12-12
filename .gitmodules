@@ -1,0 +1,3 @@
+[submodule "ckanext/locationgroup/fanstatic/sass/bootstrap"]
+	path = ckanext/locationgroup/fanstatic/sass/bootstrap
+	url = https://github.com/twbs/bootstrap.git
