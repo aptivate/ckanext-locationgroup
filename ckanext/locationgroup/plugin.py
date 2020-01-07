@@ -27,13 +27,6 @@ class LocationGroupPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
 
-    # IFacets
-    def dataset_facets(self, facets_dict, package_type):
-        if 'groups' in facets_dict:
-            facets_dict['groups'] = plugins.toolkit._('Locations')
-
-        return facets_dict
-
     def group_facets(self, facets_dict, group_type, package_type):
         facets_dict.pop('organization', False)
         facets_dict.pop('tags', False)
