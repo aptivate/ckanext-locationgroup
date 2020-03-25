@@ -13,6 +13,12 @@ Example:
       {% endfor %}
     </ul>
 #}
+
+{#
+    This template never gets used because the mapactionevent one will be used instead
+
+    group.type not set for some reason so wrongly defaults to group
+#}
 {% set type = group.type or 'group' %}
 {% set url = h.url_for(type ~ '_read', action='read', id=group.name) %}
 {% block item %}
@@ -26,7 +32,7 @@ Example:
     {% endblock %}
 
   <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}">
-  {{ _('{name}').format(name=group.display_name) }}
+  LOCATION ({{ type }}) {{ _('{name}').format(name=group.display_name) }}
   </a>
   <p>{{ h.truncate(group.description, h.location_description_length(), whole_word=True) }}</p>
 </li>
