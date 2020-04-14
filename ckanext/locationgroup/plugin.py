@@ -2,6 +2,10 @@ from ckan import logic
 
 from ckan.lib.navl.validators import ignore_missing
 
+import ckan.lib.activity_streams as activity_streams
+import ckan.lib.helpers as h
+from webhelpers.html import literal, tags
+
 import pylons.config as config
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
@@ -79,6 +83,23 @@ class LocationGroupPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'locationgroup')
+
+        # Monkey patch the group activity streams link generation, to use the
+        # correct group controller. There's no clean interface for this sadly.
+        #
+        # The following could help more cleanly configure the snippet function:
+        #  https://github.com/open-data/ckanext-extendedactivity/ 
+        # 
+        # 
+        def _group_link(group):
+            url = h.url_for(controller=self.group_controller(), action='read', id=group['name'])
+            return h.tags.link_to(group['title'], url)
+
+        def get_snippet_group(activity, detail):
+            link = _group_link(activity['data']['group'])
+            return literal('''<span>%s</span>''' % (link))
+
+        activity_streams.activity_snippet_functions['group'] = get_snippet_group
 
     # IGroupForm
     def form_to_db_schema_options(self, options):
