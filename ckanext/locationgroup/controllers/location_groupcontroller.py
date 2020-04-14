@@ -27,7 +27,6 @@ class LocationGroupController(group.GroupController):
 
     def _render_template(self, template_name, group_type):
         ''' render the correct group/org template '''
-        import sys; print >>sys.stderr, template_name, group_type
         return super(LocationGroupController, self)._render_template(template_name, group_type)
 
     # TODO: overridden as no hook for changing template in base controller.
