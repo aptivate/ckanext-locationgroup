@@ -11,9 +11,11 @@
   {% endif %}
 {% endblock %}
 
+{% set type = c.group_dict.type or 'location' %}
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('location_read', _('Datasets'), id=c.group_dict.name) }}
-  {{ h.build_nav_icon('location_about', _('About'), id=c.group_dict.name) }}
+  {{ h.build_nav_icon(type ~ '_read', _('Datasets'), id=c.group_dict.name, icon='sitemap') }}
+  {{ h.build_nav_icon(type ~ '_activity', _('Activity Stream'), id=c.group_dict.name, offset=0) }}
+  {{ h.build_nav_icon(type ~ '_about', _('About'), id=c.group_dict.name) }}
 {% endblock %}
 
 {% block secondary_content %}

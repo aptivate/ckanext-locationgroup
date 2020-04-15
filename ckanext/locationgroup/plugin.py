@@ -173,3 +173,6 @@ class LocationGroupPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
 
     def about_template(self):
         return 'locationgroup/about.html'
+
+    def activity_template(self):
+        return 'locationgroup/activity_stream.html'
