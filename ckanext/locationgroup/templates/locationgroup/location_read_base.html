@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content_action %}
+  {% if h.check_access('package_create') %}
+    {% link_for _('Add Dataset'), controller='package', action='new', class_='btn btn-primary', icon='plus-sign-alt' %}
+  {% endif %}
   {% snippet "mapactionimporter/snippets/import_button.html" %}
   {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
     {% link_for _('Manage'), controller='ckanext.locationgroup.controllers.location_groupcontroller:LocationGroupController', action='edit', id=c.group_dict.name, class_='btn', icon='wrench' %}
