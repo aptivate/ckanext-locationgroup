@@ -127,16 +127,16 @@ class TestLocationGroupController(ControllerTestBase):
 
         _get_new_location(
             user,
-            title='Albania Floods, January 2010',
+            title='Afghanistan',
             created=datetime(2010, 1, 1),
-            name='albania-floods-2010')
+            name='afg')
 
         app = self._get_test_app()
         env, response = _get_group_new_page(app, custom_group_type)
 
         form = response.forms['group-edit']
         form['title'] = 'title'
-        form['name'] = 'albania-floods-2010'
+        form['name'] = 'afg'
         form['description'] = 'description'
 
         # TODO: Doesn't seem to work without this
@@ -150,68 +150,12 @@ class TestLocationGroupController(ControllerTestBase):
         assert_true('The form contains invalid entries' in response)
         assert_true('Name: Group name already exists in database' in response)
 
-    def test_index_lists_locations_in_order_of_date(self):
+    def test_index_has_location(self):
         user = factories.User()
-        location_2010 = _get_new_location(
-            user,
-            title='Albania Floods, January 2010',
-            created=datetime(2010, 1, 1),
-            name='albania-floods-2010')
-
-        location_2009 = _get_new_location(
-            user,
-            title='Benin Floods, July 2009',
-            created=datetime(2009, 7, 1),
-            name='benin-floods-2009')
-
-        location_2014 = _get_new_location(
-            user,
-            title='Cape Verde, December 2014',
-            created=datetime(2014, 12, 1),
-            name='cape-verde-2014')
-
         app = self._get_test_app()
         env, response = _get_group_index_page(app, custom_group_type)
 
         html = BeautifulSoup(response.body)
 
-        titles = [u.string.strip()
-                  for u in html.select('.simple-location-list li > a')]
-
-        assert_equals(titles, [location_2014['title'],
-                               location_2010['title'],
-                               location_2009['title']])
-
-
-class TestHomeController(ControllerTestBase):
-    def test_index_lists_locations_in_order_of_date(self):
-        user = factories.User()
-        location_2010 = _get_new_location(
-            user,
-            title='Albania Floods, January 2010',
-            created=datetime(2010, 1, 1),
-            name='albania-floods-2010')
-
-        location_2009 = _get_new_location(
-            user,
-            title='Benin Floods, July 2009',
-            created=datetime(2009, 7, 1),
-            name='benin-floods-2009')
-
-        location_2014 = _get_new_location(
-            user,
-            title='Cape Verde, December 2014',
-            created=datetime(2014, 12, 1),
-            name='cape-verde-2014')
-
-        app = self._get_test_app()
-        env, response = _get_home_index_page(app)
-
-        html = BeautifulSoup(response.body)
-
-        titles = [u.string.strip()
-                  for u in html.select('.simple-location-list li > a')]
-
-        assert_equals(titles, [location_2014['title'],
-                               location_2010['title'],
-                               location_2009['title']])
+        afg_title = html.select('a[data-code]')[0].text
+        assert_equals(afg_title, 'Afghanistan')
