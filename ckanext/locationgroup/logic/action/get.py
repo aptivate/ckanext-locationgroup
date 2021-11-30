@@ -2,11 +2,12 @@ import ckan.plugins.toolkit as toolkit
 
 
 def location_list(context, data_dict):
-    sort = data_dict.get('sort') or 'created desc'
+    sort = data_dict.get('sort')
 
     data_dict['type'] = 'location'
 
     if sort != 'created desc':
+        data_dict['all_fields'] = False
         return toolkit.get_action('group_list')(
             context,
             data_dict=data_dict)
