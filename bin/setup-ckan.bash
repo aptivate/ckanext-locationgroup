@@ -27,6 +27,14 @@ cd ckan
 paster db init -c test-core.ini
 cd -
 
+echo "Installing ckanext-locationgroup dependencies..."
+echo "Installing ckanext-scheming"
+pip install -e git+https://github.com/ckan/ckanext-scheming.git@release-1.2.0#egg=ckanext-scheming
+pip install -r https://raw.githubusercontent.com/ckan/ckanext-scheming/release-1.2.0/requirements.txt
+echo "Installing ckanext-mapactionimporter"
+pip install -e git+https://github.com/aptivate/ckanext-mapactionimporter.git@staging#egg=ckanext-mapactionimporter
+pip install -r https://raw.githubusercontent.com/aptivate/ckanext-mapactionimporter/staging/requirements.txt
+
 echo "Installing ckanext-locationgroup and its requirements..."
 pip install -r requirements.txt
 python setup.py develop
