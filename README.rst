@@ -2,31 +2,11 @@
    these badges work. The necessary Travis and Coverage config files have been
    generated for you.
 
-.. image:: https://travis-ci.org/aptivate/ckanext-locationgroup.svg?branch=master
-    :target: https://travis-ci.org/aptivate/ckanext-locationgroup
+.. image:: https://github.com/aptivate/ckanext-locationgroup/workflows/CI/badge.svg
+    :target: https://github.com/aptivate/ckanext-locationgroup/actions
 
-.. image:: https://coveralls.io/repos/aptivate/ckanext-locationgroup/badge.svg
-  :target: https://coveralls.io/r/aptivate/ckanext-locationgroup
-
-.. image:: https://pypip.in/download/ckanext-locationgroup/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-locationgroup/
-    :alt: Downloads
-
-.. image:: https://pypip.in/version/ckanext-locationgroup/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
-    :alt: Latest Version
-
-.. image:: https://pypip.in/py_versions/ckanext-locationgroup/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
-    :alt: Supported Python versions
-
-.. image:: https://pypip.in/status/ckanext-locationgroup/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
-    :alt: Development Status
-
-.. image:: https://pypip.in/license/ckanext-locationgroup/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-locationgroup/
-    :alt: License
+.. image:: https://coveralls.io/repos/github/aptivate/ckanext-locationgroup/badge.svg
+    :target: https://coveralls.io/github/aptivate/ckanext-locationgroup
 
 =============
 ckanext-locationgroup
