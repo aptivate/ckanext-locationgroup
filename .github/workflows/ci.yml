@@ -69,7 +69,7 @@ jobs:
           bash bin/setup-ckan.bash
       - name: Test with nosetests
         run: |
-          nosetests --nologcapture --with-pylons=subdir/test.ini --with-coverage --cover-package=ckanext.mapactiongeorss --cover-inclusive --cover-erase --cover-tests ckanext/mapactiongeorss/tests
+          nosetests --nologcapture --with-pylons=subdir/test.ini --with-coverage --cover-package=ckanext.locationgroup --cover-inclusive --cover-erase --cover-tests ckanext/locationgroup/tests
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
