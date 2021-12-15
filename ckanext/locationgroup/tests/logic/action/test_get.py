@@ -29,7 +29,8 @@ class TestLocationList(custom_helpers.FunctionalTestBaseClass):
             datetime(2014, 12, 1))
 
         location_names = helpers.call_action(
-            'location_list')
+            'location_list',
+            sort='created desc')
 
         assert_equals(location_names,
                       [cape_verde_2014['name'],
@@ -63,6 +64,7 @@ class TestLocationList(custom_helpers.FunctionalTestBaseClass):
 
         location_names = helpers.call_action(
             'location_list',
+            sort='created desc',
             limit=2,
             offset=0)
 
@@ -72,6 +74,7 @@ class TestLocationList(custom_helpers.FunctionalTestBaseClass):
 
         location_names = helpers.call_action(
             'location_list',
+            sort='created desc',
             limit=2,
             offset=2)
 
@@ -81,6 +84,7 @@ class TestLocationList(custom_helpers.FunctionalTestBaseClass):
 
         location_names = helpers.call_action(
             'location_list',
+            sort='created desc',
             limit=2,
             offset=4)
 
@@ -103,6 +107,7 @@ class TestLocationList(custom_helpers.FunctionalTestBaseClass):
 
         locations = helpers.call_action(
             'location_list',
+            sort='created desc',
             all_fields=True)
 
         location_names = [e['name'] for e in locations]

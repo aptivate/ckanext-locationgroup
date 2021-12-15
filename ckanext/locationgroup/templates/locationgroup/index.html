@@ -20,7 +20,10 @@
 {% endblock %}
 
 {% block groups_search_form %}
-{% snippet 'group/snippets/location_search_form.html', form_id='group-search-form', type='location', query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, placeholder=_('Search locations...'), show_empty=request.params, no_bottom_border=true if c.page.items, sorting = [(_('Most Recent'), 'created desc'), (_('Name Ascending'), 'title asc'), (_('Name Descending'), 'title desc')] %}
+{% snippet 'group/snippets/location_search_form.html', form_id='group-search-form', type='location',
+query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, 
+placeholder=_('Search locations...'), show_empty=request.params, no_bottom_border=true if c.page.items, 
+sorting = [(_('Name Ascending'), 'title asc'), (_('Name Descending'), 'title desc'), (_('Most Recent'), 'created desc')] %}
 {% endblock %}
 
 {% block secondary_content %}

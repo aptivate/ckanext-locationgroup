@@ -11,6 +11,6 @@ class HomeController(CkanHomeController):
         context = {'model': model, 'session': model.Session,
                    'user': c.user, 'auth_user_obj': c.userobj}
         c.locations = logic.get_action('location_list')(
-            context, {'type': 'location', 'all_fields': True})
+            context, {'type': 'location'})
 
         return base.render('home/index.html', cache_force=True)

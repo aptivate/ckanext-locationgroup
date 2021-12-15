@@ -64,7 +64,7 @@ class DatasetFacetsTest(unittest.TestCase):
         self.plugin = LocationGroupPlugin()
         self.default_facet_titles = {
             'organization': _('Organizations'),
-            'groups': _('Groups'),
+            'groups': _('Locations'),
             'tags': _('Tags'),
             'res_format': _('Formats'),
             'license_id': _('Licenses'),
